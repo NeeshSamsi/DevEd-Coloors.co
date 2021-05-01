@@ -40,7 +40,13 @@ closeAdjustments.forEach((btn, index) => {
   });
 });
 generateBtn.addEventListener("click", randomColors);
-
+lockBtn.forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    colorDivs[index].classList.toggle("locked");
+    btn.children[0].classList.toggle("fa-lock-open");
+    btn.children[0].classList.toggle("fa-lock");
+  });
+});
 // FUNCTIONS
 
 // Color Generator
@@ -57,7 +63,12 @@ function randomColors() {
     const hexText = div.children[0];
     const randomColor = generateHex();
     // Add colors to array
-    initialColors.push(chroma(randomColor).hex());
+    if (div.classList.contains("locked")) {
+      initialColors.push(hexText.innerText);
+      return;
+    } else {
+      initialColors.push(chroma(randomColor).hex());
+    }
 
     // Add color to the background
     div.style.backgroundColor = randomColor;
